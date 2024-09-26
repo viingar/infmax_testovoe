@@ -1,0 +1,4 @@
+group,type,number,weight
+Group1,TypeA,12345,100
+Group1,TypeA,67890,150
+Group2,TypeB,54321,200

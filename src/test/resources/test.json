@@ -1,0 +1,20 @@
+[
+  {
+    "group": "Group1",
+    "type": "TypeA",
+    "number": 12345,
+    "weight": 100
+  },
+  {
+    "group": "Group1",
+    "type": "TypeA",
+    "number": 67890,
+    "weight": 150
+  },
+  {
+    "group": "Group2",
+    "type": "TypeB",
+    "number": 54321,
+    "weight": 200
+  }
+]
