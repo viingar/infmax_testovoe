@@ -8,7 +8,7 @@ import java.util.List;
 public class RetrieveDataTest {
 
     @Test
-    public void testAnalyze_withData() {
+    public void testExtractionWithData() {
         List<Data> objects = Arrays.asList(
                 new Data("Group1", "TypeA", 1, 100),
                 new Data("Group1", "TypeA", 2, 150),
@@ -25,7 +25,7 @@ public class RetrieveDataTest {
 
 
     @Test
-    public void testAnalyze_withSingleObject() {
+    public void testExtractionWithSingleObject() {
         List<Data> objects = Arrays.asList(
                 new Data("Group1", "TypeA", 1, 50)
         );
