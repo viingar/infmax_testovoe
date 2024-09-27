@@ -12,7 +12,9 @@ public class RetrieveDataTest {
         List<Data> objects = Arrays.asList(
                 new Data("Group1", "TypeA", 1, 100),
                 new Data("Group1", "TypeA", 2, 150),
-                new Data("Group2", "TypeB", 3, 200)
+                new Data("Group2", "TypeB", 3, 200),
+                new Data("Group2", "TypeB", 3, 200),
+                new Data("Group2", "TypeB", 3, 350)
         );
 
         RetrieveData retrieveData = new RetrieveData();

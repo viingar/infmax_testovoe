@@ -16,14 +16,13 @@ public class RetrieveData {
         BigInteger minWeight = BigInteger.valueOf(Long.MAX_VALUE);
 
         for (Data object : objects) {
-
             String key = object.getGroup() + "-" + object.getType();
             duplicates.put(key, duplicates.getOrDefault(key, 0) + 1);
 
             BigInteger weight = BigInteger.valueOf(object.getWeight());
 
             weightsByGroup.put(object.getGroup(),
-                   weightsByGroup.getOrDefault(object.getGroup(), BigInteger.ZERO).add(weight));
+                    weightsByGroup.getOrDefault(object.getGroup(), BigInteger.ZERO).add(weight));
 
             if (weight.compareTo(maxWeight) > 0) {
                 maxWeight = weight;
@@ -33,11 +32,21 @@ public class RetrieveData {
             }
         }
 
+        boolean hasDuplicates = false;
         System.out.println("Дубликаты объектов:");
-        duplicates.forEach((key, value) -> System.out.println(key + ": " + value));
+        for (Map.Entry<String, Integer> entry : duplicates.entrySet()) {
+            if (entry.getValue() > 1) {
+                System.out.println(entry.getKey() + " : " + entry.getValue());
+                hasDuplicates = true;
+            }
+        }
+
+        if (!hasDuplicates) {
+            System.out.println("Нет дубликатов");
+        }
 
         System.out.println("Суммарный вес объектов в каждой группе:");
-        weightsByGroup.forEach((group, totalWeight) -> System.out.println(group + ": " + totalWeight));
+        weightsByGroup.forEach((group, totalWeight) -> System.out.println(group + " : " + totalWeight));
 
         System.out.println("Максимальный вес: " + maxWeight);
         System.out.println("Минимальный вес: " + minWeight);
