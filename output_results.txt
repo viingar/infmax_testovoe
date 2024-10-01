@@ -1,0 +1,13 @@
+Дубликаты объектов:
+UjYOPvNQtJnZ-xhsGJVHQQHIX : 16625
+YyVLnZfutCCEyt-igjHFQzDQjVUNP : 17007
+WIiVfKgTZQcz-qvJJPeXSdFKBFb : 16239
+jTHveTtPsn-WgeclyEvgZVPJY : 16735
+AbvSmnNESSa-ZMUNEoMTwSx : 16711
+RiyrKqPWhaar-pLmVTPgGKA : 2
+HiMxpvXptyxjlB-uKZCrnYidKkdm : 16696
+sqDLhGFkKMyoAW-FmfwYtGDVX : 16728
+YKZgTIESexUoK-NREIvAGEBCHK : 16499
+vZEtfUJkixxeE-jQPuzCEtiJxsNu : 16629
+Максимальный вес: 9223371806498281821
+Минимальный вес: 2471211543646

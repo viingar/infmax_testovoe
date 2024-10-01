@@ -4,34 +4,36 @@ import org.example.Model.Data;
 
 import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RetrieveData {
-    public void extraction(List<Data> objects) {
-        Map<String, Integer> duplicates = new HashMap<>();
-        Map<String, BigInteger> weightsByGroup = new HashMap<>();
 
-        BigInteger maxWeight = BigInteger.valueOf(Long.MIN_VALUE);
-        BigInteger minWeight = BigInteger.valueOf(Long.MAX_VALUE);
+    private final Map<String, Integer> duplicates = new HashMap<>();
+    private final Map<String, BigInteger> weightsByGroup = new HashMap<>();
 
-        for (Data object : objects) {
-            String key = object.getGroup() + "-" + object.getType();
-            duplicates.put(key, duplicates.getOrDefault(key, 0) + 1);
+    private long maxWeight = Long.MIN_VALUE;
+    private long minWeight = Long.MAX_VALUE;
 
-            BigInteger weight = BigInteger.valueOf(object.getWeight());
+    public void processData(Data object) {
 
-            weightsByGroup.put(object.getGroup(),
-                    weightsByGroup.getOrDefault(object.getGroup(), BigInteger.ZERO).add(weight));
+        String key = object.getGroup() + "-" + object.getType(); //переполнение из за этой строчки
+        duplicates.put(key, duplicates.getOrDefault(key, 0) + 1);
 
-            if (weight.compareTo(maxWeight) > 0) {
-                maxWeight = weight;
-            }
-            if (weight.compareTo(minWeight) < 0) {
-                minWeight = weight;
-            }
+        long weight = object.getWeight();
+
+        weightsByGroup.put(object.getGroup(),
+                weightsByGroup.getOrDefault(object.getGroup(), BigInteger.ZERO)
+                        .add(BigInteger.valueOf(weight)));
+
+        if (weight > maxWeight) {
+            maxWeight = weight;
         }
+        if (weight < minWeight) {
+            minWeight = weight;
+        }
+    }
 
+    public void printResults() {
         boolean hasDuplicates = false;
         System.out.println("Дубликаты объектов:");
         for (Map.Entry<String, Integer> entry : duplicates.entrySet()) {
@@ -50,5 +52,16 @@ public class RetrieveData {
 
         System.out.println("Максимальный вес: " + maxWeight);
         System.out.println("Минимальный вес: " + minWeight);
+
+        clearData();
+    }
+
+    private void clearData() {
+        duplicates.clear();
+        weightsByGroup.clear();
+        maxWeight = Long.MIN_VALUE;
+        minWeight = Long.MAX_VALUE;
+
+        System.gc();
     }
 }

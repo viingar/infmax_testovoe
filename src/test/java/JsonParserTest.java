@@ -1,8 +1,9 @@
-import org.example.JsonParser;
+import org.example.JsonParsing;
 import org.example.Model.Data;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,8 +12,10 @@ public class JsonParserTest {
 
     @Test
     public void testReadJsonWithValidData() throws IOException {
-        JsonParser jsonParser = new JsonParser();
-        List<Data> dataList = jsonParser.readJson("src/test/resources/test.json");
+        JsonParsing jsonParser = new JsonParsing();
+        List<Data> dataList = new ArrayList<>();
+
+        jsonParser.readJson("src/test/resources/test.json", dataList::add);
 
         assertNotNull(dataList);
         assertEquals(3, dataList.size());
@@ -26,9 +29,10 @@ public class JsonParserTest {
 
     @Test
     public void testReadJsonWithEmptyFile() throws IOException {
+        JsonParsing jsonParser = new JsonParsing();
+        List<Data> dataList = new ArrayList<>();
 
-        JsonParser jsonParser = new JsonParser();
-        List<Data> dataList = jsonParser.readJson("src/test/resources/empty.json");
+        jsonParser.readJson("src/test/resources/empty.json", dataList::add);
 
         assertNotNull(dataList);
         assertTrue(dataList.isEmpty());
@@ -36,11 +40,10 @@ public class JsonParserTest {
 
     @Test
     public void testReadJsonWithInvalidData() {
-        JsonParser jsonParser = new JsonParser();
+        JsonParsing jsonParser = new JsonParsing();
 
         assertThrows(IOException.class, () -> {
-            jsonParser.readJson("src/test/resources/invalid.json");
+            jsonParser.readJson("src/test/resources/invalid.json", data -> {});
         });
     }
-
 }

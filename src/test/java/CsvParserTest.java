@@ -3,6 +3,7 @@ import org.example.Model.Data;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +13,9 @@ public class CsvParserTest {
     @Test
     public void testReadCsvWithValidData() throws IOException {
         CsvParser parser = new CsvParser();
-        List<Data> dataList = parser.readCsv("src/test/resources/test.csv");
+        List<Data> dataList = new ArrayList<>();
+
+        parser.readCsv("src/test/resources/test.csv", dataList::add);
 
         assertEquals(3, dataList.size());
 
@@ -26,9 +29,10 @@ public class CsvParserTest {
     @Test
     public void testReadCsvWithEmptyData() throws IOException {
         CsvParser parser = new CsvParser();
-        List<Data> dataList = parser.readCsv("src/test/resources/empty.csv");
+        List<Data> dataList = new ArrayList<>();
+
+        parser.readCsv("src/test/resources/empty.csv", dataList::add);
 
         assertEquals(0, dataList.size());
-
     }
 }

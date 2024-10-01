@@ -34,6 +34,7 @@ public class Data {
         return type;
     }
 
+
     public void setType(String type) {
         this.type = type;
     }
@@ -55,4 +56,5 @@ public class Data {
     public void setWeight(long weight) {
         this.weight = weight;
     }
+
 }

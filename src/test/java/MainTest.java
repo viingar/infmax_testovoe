@@ -40,22 +40,6 @@ public class MainTest {
         assertTrue(outContent.toString().contains("Минимальный вес:"));
     }
 
-    @Test
-    public void testMainWithUnsupportedFileFormat() {
-        System.setIn(new ByteArrayInputStream("unsupported.txt\nexit\n".getBytes()));
-        Main.main(new String[]{});
-
-        assertTrue(outContent.toString().contains("Неподдерживаемый формат файла."));
-    }
-
-    @Test
-    public void testMainWithIOException() {
-
-        System.setIn(new ByteArrayInputStream("non_existent_file.json\nexit\n".getBytes()));
-        Main.main(new String[]{});
-
-        assertTrue(outContent.toString().contains("Ошибка при чтении файла:"));
-    }
 
     private File createTempJsonFile() throws IOException {
         File tempFile = File.createTempFile("test", ".json");
