@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 public class JsonParsing {
+
+    private static final long MAX_OBJECTS = 10_000_000;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public void readJson(String fileName, Consumer<Data> processRow) throws IOException {
+    public boolean readJson(String fileName, Consumer<Data> processRow) throws IOException {
         JsonFactory factory = new JsonFactory();
 
         try (JsonParser parser = factory.createParser(new File(fileName))) {
@@ -24,7 +26,12 @@ public class JsonParsing {
                 throw new IOException("Ожидается начало массива JSON");
             }
 
+            long count = 0;
             while (parser.nextToken() == JsonToken.START_OBJECT) {
+                if (++count > MAX_OBJECTS) {
+                    System.out.println("Файл содержит более 10 миллионов объектов. Пожалуйста, используйте файл меньшего объема.");
+                    return false;
+                }
 
                 Data data = parser.readValueAs(Data.class);
                 processRow.accept(data);
@@ -32,5 +39,6 @@ public class JsonParsing {
         } catch (JsonMappingException e) {
             System.err.println("Ошибка при разборе JSON: " + e.getMessage());
         }
+        return true;
     }
 }

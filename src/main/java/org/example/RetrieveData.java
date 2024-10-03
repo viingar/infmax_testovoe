@@ -1,26 +1,31 @@
 package org.example;
 
 import org.example.Model.Data;
+import org.example.Model.GroupTypeKey;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RetrieveData {
 
-    private final Map<String, Integer> duplicates = new HashMap<>();
+    private final Map<GroupTypeKey, Integer> duplicates = new LinkedHashMap<GroupTypeKey, Integer>(16, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<GroupTypeKey, Integer> eldest) {
+            return size() > 1000000;
+        }
+    };
+
     private final Map<String, BigInteger> weightsByGroup = new HashMap<>();
 
     private long maxWeight = Long.MIN_VALUE;
     private long minWeight = Long.MAX_VALUE;
 
     public void processData(Data object) {
+        GroupTypeKey key = new GroupTypeKey(object.getGroup(), object.getType());
 
-        String key = object.getGroup() + "-" + object.getType(); //переполнение из за этой строчки
         duplicates.put(key, duplicates.getOrDefault(key, 0) + 1);
 
         long weight = object.getWeight();
-
         weightsByGroup.put(object.getGroup(),
                 weightsByGroup.getOrDefault(object.getGroup(), BigInteger.ZERO)
                         .add(BigInteger.valueOf(weight)));
@@ -34,11 +39,12 @@ public class RetrieveData {
     }
 
     public void printResults() {
+
         boolean hasDuplicates = false;
         System.out.println("Дубликаты объектов:");
-        for (Map.Entry<String, Integer> entry : duplicates.entrySet()) {
+        for (Map.Entry<GroupTypeKey, Integer> entry : duplicates.entrySet()) {
             if (entry.getValue() > 1) {
-                System.out.println(entry.getKey() + " : " + entry.getValue());
+                System.out.println("Группа: " + entry.getKey().group + ", Тип: " + entry.getKey().type + " : " + entry.getValue());
                 hasDuplicates = true;
             }
         }
@@ -56,12 +62,10 @@ public class RetrieveData {
         clearData();
     }
 
-    private void clearData() {
+    void clearData() {
         duplicates.clear();
         weightsByGroup.clear();
         maxWeight = Long.MIN_VALUE;
         minWeight = Long.MAX_VALUE;
-
-        System.gc();
     }
 }

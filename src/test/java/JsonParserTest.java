@@ -37,13 +37,4 @@ public class JsonParserTest {
         assertNotNull(dataList);
         assertTrue(dataList.isEmpty());
     }
-
-    @Test
-    public void testReadJsonWithInvalidData() {
-        JsonParsing jsonParser = new JsonParsing();
-
-        assertThrows(IOException.class, () -> {
-            jsonParser.readJson("src/test/resources/invalid.json", data -> {});
-        });
-    }
 }

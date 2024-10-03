@@ -8,7 +8,7 @@ import java.util.List;
 public class RetrieveDataTest {
 
     @Test
-    public void testProcessDataWithMultipleObjects() {
+    public void testResultsWithData() {
         List<Data> objects = Arrays.asList(
                 new Data("Group1", "TypeA", 1, 100),
                 new Data("Group1", "TypeA", 2, 150),
@@ -19,23 +19,23 @@ public class RetrieveDataTest {
 
         RetrieveData retrieveData = new RetrieveData();
 
-        for (Data object : objects) {
-            retrieveData.processData(object);
+        for (Data data : objects) {
+            retrieveData.processData(data);
         }
 
         retrieveData.printResults();
     }
 
     @Test
-    public void testProcessDataWithSingleObject() {
+    public void testResultsWithSingleObject() {
         List<Data> objects = Arrays.asList(
                 new Data("Group1", "TypeA", 1, 50)
         );
 
         RetrieveData retrieveData = new RetrieveData();
 
-        for (Data object : objects) {
-            retrieveData.processData(object);
+        for (Data data : objects) {
+            retrieveData.processData(data);
         }
 
         retrieveData.printResults();

@@ -5,37 +5,44 @@ import java.util.Scanner;
 
 public class Main {
 
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Runtime runtime = Runtime.getRuntime();
-        RetrieveData retrieveData = new RetrieveData();
 
         while (true) {
             System.out.println("Введите путь до файла (или 'exit' для выхода):");
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.println("Пожалуйста, введите путь до файла.");
+                continue;
+            }
 
             if ("exit".equalsIgnoreCase(input)) {
                 break;
             }
-            if (input.endsWith(".csv")) {
-                try {
-                    new CsvParser().readCsv(input, retrieveData::processData);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+            RetrieveData retrieveData = new RetrieveData();
+
+            try {
+                boolean isSuccess = false;
+                if (input.endsWith(".csv")) {
+                    isSuccess = new CsvParser().readCsv(input, retrieveData::processData);
+                } else if (input.endsWith(".json")) {
+                    isSuccess = new JsonParsing().readJson(input, retrieveData::processData);
+                } else {
+                    System.out.println("Неверный формат файла. Поддерживаются только файлы .csv или .json.");
+                    continue;
                 }
-            } else if (input.endsWith(".json")) {
-                try {
-                    new JsonParsing().readJson(input, retrieveData::processData);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+                if (isSuccess) {
+                    retrieveData.printResults();
                 }
+
+            } catch (IOException e) {
+                System.out.println("Ошибка при обработке файла: " + e.getMessage());
             }
 
-            retrieveData.printResults();
-
+            retrieveData.clearData();
         }
-
-        runtime.gc();
     }
 }
