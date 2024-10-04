@@ -11,7 +11,7 @@ public class RetrieveData {
     private final Map<GroupTypeKey, Integer> duplicates = new LinkedHashMap<GroupTypeKey, Integer>(16, 0.75f, true) {
         @Override
         protected boolean removeEldestEntry(Map.Entry<GroupTypeKey, Integer> eldest) {
-            return size() > 1000000;
+            return size() > 2000;
         }
     };
 
